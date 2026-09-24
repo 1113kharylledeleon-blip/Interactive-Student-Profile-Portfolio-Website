@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kharylle L. De Leon | Portfolio</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Cinzel, Plus Jakarta Sans, Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#d4af37',
+                            light: '#f3e5ab',
+                            dark: '#aa820a',
+                            glow: 'rgba(212, 175, 55, 0.15)'
+                        },
+                        dark: {
+                            base: '#0a0a0c',
+                            surface: '#121216',
+                            card: '#1a1a22',
+                            border: '#2a2a36'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0c;
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a36;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(18, 18, 22, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .glass-card {
+            background: rgba(26, 26, 34, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold selection:text-black">
+
+    <!-- Navigation Header / Menu -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-gold/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('home')">
+                <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-gold/10 text-gold font-cinzel font-bold text-lg">
+                    KD
+                </div>
+                <div>
+                    <span class="font-cinzel text-lg font-bold tracking-wider text-white block leading-tight">KHARYLLE L. DE LEON</span>
+                    <span class="text-xs text-gold/80 font-mono tracking-widest uppercase">DOST Scholar | BSIT Student</span>
+                </div>
+            </div>
+
+            <!-- Navigation menu -->
+            <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                <button onclick="switchView('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gold border-b-2 border-gold transition">Home</button>
+                <button onclick="switchView('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white transition">About Me</button>
+                <button onclick="switchView('skills')" id="nav-skills" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white transition">Skills</button>
+                <button onclick="switchView('projects')" id="nav-projects" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white transition">Projects</button>
+                <button onclick="switchView('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white transition">Contact</button>
+            </nav>
+
+            <div class="hidden sm:flex items-center space-x-3">
+                <button onclick="openAddProjectModal()" class="px-4 py-2 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-black text-xs font-semibold uppercase tracking-wider transition duration-300">
+                    <i class="fa-solid fa-plus mr-1.5"></i> Add Project
+                </button>
+            </div>
+
+            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white text-xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-gold/20 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchView('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gold">Home</button>
+            <button onclick="switchView('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300">About Me</button>
+            <button onclick="switchView('skills'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300">Skills</button>
+            <button onclick="switchView('projects'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300">Projects</button>
+            <button onclick="switchView('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300">Contact</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+
+        <!-- ================= HOME VIEW ================= -->
+        <section id="view-home" class="view-section space-y-12">
+            <!-- Hero Banner Container with Luxury Ambient Glows -->
+            <div class="relative overflow-hidden rounded-3xl glass-panel p-8 sm:p-12 lg:p-16 border border-gold/30 shadow-2xl shadow-gold/5 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+                
+                <!-- Background Ambient Glow Accents -->
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-gold-dark/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Left Content Column -->
+                <div class="space-y-6 max-w-2xl relative z-10">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center space-x-2.5 bg-dark-card border border-gold/40 rounded-full px-4 py-1.5 text-xs text-gold font-mono shadow-inner">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gold animate-ping"></span>
+                        <span class="font-semibold tracking-wider uppercase">WDSL; My Personal Portfolio Website</span>
+                    </div>
+
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-cinzel font-bold text-white leading-[1.15]">
+                        Kharylle L. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold-dark filter drop-shadow-sm">De Leon</span>
+                    </h1>
+
+                    <!-- Bio Paragraph -->
+                    <p class="text-gray-300 text-base sm:text-lg leading-relaxed font-sans">
+                        Hello and welcome! I am an Information Technology student specializing in mobile development, practicing <span class="text-gold font-medium">Flutter Mobile Engineering</span>, and crafting robust system architecture. As a proud Department of Science and Technology (<span class="text-gold font-medium">DOST</span>) Scholar, I focus on building efficient, user-centered digital solutions.
+                    </p>
+
+                    <!-- Quick Highlight Stats Row -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 pb-2">
+                        <div class="bg-dark-card/80 border border-gold/20 rounded-xl p-3.5 backdrop-blur-sm">
+                            <span class="text-xs text-gray-400 font-mono block uppercase tracking-wider">Specialty</span>
+                            <span class="text-sm font-bold text-white font-cinzel">Mobile & UI/UX</span>
+                        </div>
+                        <div class="bg-dark-card/80 border border-gold/20 rounded-xl p-3.5 backdrop-blur-sm">
+                            <span class="text-xs text-gray-400 font-mono block uppercase tracking-wider">Institution</span>
+                            <span class="text-sm font-bold text-white font-cinzel">SPCF</span>
+                        </div>
+                        <div class="bg-dark-card/80 border border-gold/20 rounded-xl p-3.5 backdrop-blur-sm col-span-2 sm:col-span-1">
+                            <span class="text-xs text-gray-400 font-mono block uppercase tracking-wider">Focus</span>
+                            <span class="text-sm font-bold text-gold font-cinzel">Flutter & Figma</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="switchView('projects')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold-dark text-black font-bold uppercase tracking-wider hover:brightness-110 transition-all duration-300 shadow-lg shadow-gold/25 flex items-center space-x-3 group">
+                            <span>Explore Portfolio</span>
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <a href="Ccurriculum Vitae (CV).pdf" target="_blank" class="px-8 py-4 rounded-xl border border-gold/50 text-gold hover:bg-gold/10 font-bold uppercase tracking-wider transition-all duration-300 flex items-center space-x-3 backdrop-blur-sm">
+                            <span>View CV</span>
+                            <i class="fa-solid fa-file-pdf text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Profile Image Column -->
+                <div class="relative z-10 flex-shrink-0">
+                    <!-- Decorative Golden Frame Backdrop -->
+                    <div class="absolute -inset-2 bg-gradient-to-tr from-gold/40 via-gold-dark/20 to-transparent rounded-3xl blur-md opacity-75"></div>
+                    
+                    <div class="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden border-2 border-gold/50 p-2.5 bg-dark-surface relative group shadow-2xl">
+                        <img src="profile.jpg" alt="Kharylle De Leon" class="w-full h-full rounded-xl object-cover border border-gold/20 shadow-inner group-hover:scale-105 transition duration-700">
+                        
+                        <!-- Floating Badge Overlay Inside Image -->
+                        <div class="absolute bottom-5 left-5 right-5 bg-dark-base/90 backdrop-blur-md border border-gold/30 rounded-xl p-3 text-center shadow-lg">
+                            <p class="text-xs font-cinzel font-bold text-white tracking-wider">Kharylle L. De Leon</p>
+                            <p class="text-[10px] text-gold font-mono tracking-widest uppercase mt-0.5">DOST Scholar | BSIT-3</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= ABOUT ME VIEW (WITH CERTIFICATES SECTION) ================= -->
+        <section id="view-about" class="view-section hidden space-y-12">
+            <div class="border-b border-gold/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-cinzel font-bold text-white tracking-wide">About Me</h2>
+                    <p class="text-sm text-gold font-mono">Comprehensive Profile, Academic Background, Credentials, & Creative Philosophy</p>
+                </div>
+                <a href="Ccurriculum Vitae (CV).pdf" target="_blank" class="px-4 py-2 rounded-lg border border-gold/50 text-gold hover:bg-gold/10 font-semibold text-xs uppercase tracking-wider transition flex items-center space-x-2 self-start">
+                    <span>View CV</span>
+                    <i class="fa-solid fa-file-pdf text-xs"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-8 flex flex-col">
+                    <div class="glass-panel p-8 rounded-2xl space-y-5 border border-gold/20 shadow-xl relative overflow-hidden flex-1">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl pointer-events-none"></div>
+                        <h3 class="text-2xl font-cinzel font-bold text-gold flex items-center">
+                            <i class="fa-solid fa-user-graduate mr-3 text-lg"></i> Professional Profile
+                        </h3>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            I am <strong class="text-white">Kharylle L. De Leon</strong>, an aspiring Information Technology professional currently in my third year of undergraduate studies at Systems Plus College Foundation. As a proud <span class="text-gold font-semibold">DOST SEI Merit Scholar</span>, I approach software engineering and technical design with rigorous discipline, academic excellence, and a deep appreciation for human-centered system design.
+                        </p>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            My core technical passion lies at the intersection of mobile engineering and interface architecture—specifically building robust, cross-platform applications using <span class="text-gold font-mono">Flutter & Dart</span> while ensuring seamless user experiences mapped out through precise wireframing and prototyping in <span class="text-gold font-mono">Figma</span>.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-dark-border text-xs font-mono">
+                            <div>
+                                <span class="text-gray-400 block uppercase tracking-wider mb-1">Status</span>
+                                <span class="text-white font-bold">3rd Year BSIT</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block uppercase tracking-wider mb-1">Scholarship</span>
+                                <span class="text-gold font-bold">DOST Scholar</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block uppercase tracking-wider mb-1">Base</span>
+                                <span class="text-white font-bold">Angeles City, PH</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-8 rounded-2xl space-y-5 border border-gold/10 relative overflow-hidden flex-1">
+                        <div class="absolute bottom-0 right-0 w-40 h-40 bg-gold/5 rounded-full blur-2xl pointer-events-none"></div>
+                        <h3 class="text-xl font-cinzel font-bold text-gold flex items-center">
+                            <i class="fa-solid fa-compass mr-3 text-lg"></i> Interests, Hobbies & Philosophy
+                        </h3>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            I believe that great software emerges where meticulous analytical problem-solving intersects with clean, minimalist visual layout. Beyond building functional architectures and writing production code, I invest my free time exploring creative and technical pursuits:
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                            <div class="bg-dark-surface/60 border border-dark-border rounded-xl p-4 space-y-1.5 hover:border-gold/40 transition">
+                                <div class="text-gold text-base font-bold flex items-center">
+                                    <i class="fa-solid fa-pen-nib mr-2 text-sm"></i> UI Prototyping
+                                </div>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Designing experimental mobile layouts, micro-interactions, and custom component libraries in Figma.
+                                </p>
+                            </div>
+
+                            <div class="bg-dark-surface/60 border border-dark-border rounded-xl p-4 space-y-1.5 hover:border-gold/40 transition">
+                                <div class="text-gold text-base font-bold flex items-center">
+                                    <i class="fa-solid fa-mobile-screen mr-2 text-sm"></i> Cross-Platform Apps
+                                </div>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Prototyping responsive Flutter widgets and testing smooth animations on real mobile viewports.
+                                </p>
+                            </div>
+
+                            <div class="bg-dark-surface/60 border border-dark-border rounded-xl p-4 space-y-1.5 hover:border-gold/40 transition">
+                                <div class="text-gold text-base font-bold flex items-center">
+                                    <i class="fa-solid fa-book-open mr-2 text-sm"></i> Tech Reading
+                                </div>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Following software engineering articles, system design patterns, and modern typography trends.
+                                </p>
+                            </div>
+
+                            <div class="bg-dark-surface/60 border border-dark-border rounded-xl p-4 space-y-1.5 hover:border-gold/40 transition">
+                                <div class="text-gold text-base font-bold flex items-center">
+                                    <i class="fa-solid fa-puzzle-piece mr-2 text-sm"></i> Logic & Puzzles
+                                </div>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Tackling complex algorithmic puzzles and brainstorming system workflows to sharpen structural logic.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 flex flex-col">
+                    <div class="glass-panel p-8 rounded-2xl space-y-6 border border-gold/20 shadow-xl flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-cinzel font-bold text-gold flex items-center mb-6">
+                                <i class="fa-solid fa-graduation-cap mr-3 text-lg"></i> Educational Milestones
+                            </h3>
+                            
+                            <div class="space-y-8 border-l-2 border-gold/30 pl-5 ml-2 relative">
+                                <div class="relative">
+                                    <span class="absolute -left-[27px] top-1.5 w-3.5 h-3.5 rounded-full bg-gold border-2 border-dark-surface"></span>
+                                    <span class="text-[11px] font-mono text-gold tracking-widest block mb-1">2024 - PRESENT</span>
+                                    <h4 class="text-base font-bold text-white font-cinzel">BS in Information Technology</h4>
+                                    <p class="text-xs text-gray-400 font-mono mt-0.5">Systems Plus College Foundation (3rd Year)</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[27px] top-1.5 w-3.5 h-3.5 rounded-full bg-dark-border border-2 border-dark-surface"></span>
+                                    <span class="text-[11px] font-mono text-gold tracking-widest block mb-1">2022 to 2024</span>
+                                    <h4 class="text-base font-bold text-white font-cinzel">Senior High School</h4>
+                                    <p class="text-xs text-gray-400 font-mono mt-0.5">Angeles City Science High School</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[27px] top-1.5 w-3.5 h-3.5 rounded-full bg-dark-border border-2 border-dark-surface"></span>
+                                    <span class="text-[11px] font-mono text-gold tracking-widest block mb-1">2018 to 2022</span>
+                                    <h4 class="text-base font-bold text-white font-cinzel">Junior High School</h4>
+                                    <p class="text-xs text-gray-400 font-mono mt-0.5">Francisco G. Nepomuceno Memorial High School</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[27px] top-1.5 w-3.5 h-3.5 rounded-full bg-dark-border border-2 border-dark-surface"></span>
+                                    <span class="text-[11px] font-mono text-gold tracking-widest block mb-1">2012 to 2018</span>
+                                    <h4 class="text-base font-bold text-white font-cinzel">Elementary Education</h4>
+                                    <p class="text-xs text-gray-400 font-mono mt-0.5">San Ignacio Elementary School</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 border-t border-dark-border text-center">
+                            <span class="text-xs font-mono text-gold/70">Continuous Academic & Practical Growth</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTEGRATED CERTIFICATES & AWARDS SUBSECTION WITHIN ABOUT ME -->
+            <div class="glass-panel p-8 rounded-2xl space-y-6 border border-gold/20 shadow-xl mt-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-dark-border pb-4">
+                    <h3 class="text-xl font-cinzel font-bold text-gold flex items-center">
+                        <i class="fa-solid fa-award mr-3 text-lg"></i> Certificates & Academic Awards
+                    </h3>
+                    <span class="text-xs font-mono text-gold/70">Scholarships & Technical Certifications</span>
+                </div>
+
+                <!-- Certificates Grid Container -->
+                <div id="certificates-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                    <!-- JavaScript will dynamically load the first 3 certificates, then reveal the rest upon clicking "See More" -->
+                </div>
+
+                <!-- See More Button Container -->
+                <div class="text-center pt-4" id="see-more-container">
+                    <button onclick="toggleCertificates()" id="see-more-btn" class="px-6 py-2.5 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-black text-xs font-semibold uppercase tracking-wider transition duration-300">
+                        <i class="fa-solid fa-chevron-down mr-2"></i> See More Certificates (<span id="hidden-count">14</span> more)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SKILLS & GRAPHS VIEW (REDESIGNED) ================= -->
+        <section id="view-skills" class="view-section hidden space-y-8">
+            <div class="border-b border-gold/20 pb-4">
+                <h2 class="text-3xl font-cinzel font-bold text-white tracking-wide">Skills Analytics</h2>
+                <p class="text-sm text-gold font-mono">Visual assessment of technical proficiencies, core domain competencies, and interpersonal dynamics</p>
+            </div>
+
+            <!-- Top Grid: Technical Proficiencies & Focus Distribution -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Core Proficiency Meters Card -->
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6 border border-gold/20 shadow-xl hover:border-gold/40 transition duration-300">
+                    <h3 class="text-xl font-cinzel font-bold text-gold flex items-center gap-3">
+                        <i class="fa-solid fa-bolt text-lg"></i> Core Proficiency Meters
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Figma UI/UX & Wireframing</span>
+                                <span class="text-gold font-bold">95%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Tailwind CSS & Frontend Web</span>
+                                <span class="text-gold font-bold">90%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Flutter & Dart Mobile Dev</span>
+                                <span class="text-gold font-bold">88%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">System Architecture & Analysis</span>
+                                <span class="text-gold font-bold">85%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">JavaScript / Web Logic</span>
+                                <span class="text-gold font-bold">82%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competency Focus Distribution Card -->
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6 border border-gold/20 shadow-xl flex flex-col justify-between hover:border-gold/40 transition duration-300">
+                    <h3 class="text-xl font-cinzel font-bold text-gold flex items-center gap-3">
+                        <i class="fa-solid fa-chart-pie text-lg"></i> Competency Focus Distribution
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 my-auto">
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 text-center hover:border-gold/40 transition">
+                            <div class="text-3xl font-cinzel font-bold text-gold mb-1">40%</div>
+                            <div class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">UI/UX & Prototyping</div>
+                        </div>
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 text-center hover:border-gold/40 transition">
+                            <div class="text-3xl font-cinzel font-bold text-gold mb-1">30%</div>
+                            <div class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Mobile Engineering</div>
+                        </div>
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 text-center hover:border-gold/40 transition">
+                            <div class="text-3xl font-cinzel font-bold text-gold mb-1">20%</div>
+                            <div class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Web Frontend</div>
+                        </div>
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 text-center hover:border-gold/40 transition">
+                            <div class="text-3xl font-cinzel font-bold text-gold mb-1">10%</div>
+                            <div class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">System Architecture</div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-gray-400 text-center font-mono italic pt-4 border-t border-dark-border">
+                        Continuously scaling capabilities through academic study at SPCF and DOST scholar projects.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Full-Width Grid: Professional & Interpersonal Dynamics (Soft Skills) -->
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6 border border-gold/20 shadow-xl hover:border-gold/40 transition duration-300">
+                <h3 class="text-xl font-cinzel font-bold text-gold flex items-center gap-3">
+                    <i class="fa-solid fa-handshake text-lg"></i> Professional & Interpersonal Dynamics (Soft Skills)
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 pt-2">
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Cross-Functional Collaboration</span>
+                                <span class="text-gold font-bold">92%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 92%"></div>
+                            </div>
+                            <p class="text-[11px] text-gray-400 mt-1">Bridging design intent with engineering constraints seamlessly.</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">User-Centric Problem Solving</span>
+                                <span class="text-gold font-bold">90%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 90%"></div>
+                            </div>
+                            <p class="text-[11px] text-gray-400 mt-1">Translating complex user pain points into elegant, intuitive UI/UX flows.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Agile Adaptability & Rapid Learning</span>
+                                <span class="text-gold font-bold">88%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 88%"></div>
+                            </div>
+                            <p class="text-[11px] text-gray-400 mt-1">Quickly mastering new frameworks and rigorous academic DOST requirements.</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-white font-medium">Technical Communication</span>
+                                <span class="text-gold font-bold">85%</span>
+                            </div>
+                            <div class="w-full bg-dark-base rounded-full h-2.5 border border-dark-border overflow-hidden p-0.5">
+                                <div class="bg-gradient-to-r from-gold-dark to-gold h-full rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            </div>
+                            <p class="text-[11px] text-gray-400 mt-1">Articulating architectural decisions clearly to peers and project reviewers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PROJECTS VIEW ================= -->
+        <section id="view-projects" class="view-section hidden space-y-8">
+            <div class="border-b border-gold/20 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-cinzel font-bold text-white">Projects</h2>
+                    <p class="text-sm text-gold font-mono">Click any project card to view enlarged images and details</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="Ccurriculum Vitae (CV).pdf" target="_blank" class="px-4 py-2 rounded-lg border border-gold/50 text-gold hover:bg-gold/10 font-semibold text-xs uppercase tracking-wider transition flex items-center space-x-2">
+                        <span>View CV</span>
+                        <i class="fa-solid fa-file-pdf text-xs"></i>
+                    </a>
+                    <button onclick="openAddProjectModal()" class="px-4 py-2 rounded-lg bg-gold text-black font-semibold text-xs tracking-wider uppercase hover:bg-gold-light transition">
+                        <i class="fa-solid fa-plus mr-1"></i> Add New Project
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="project-search" oninput="filterProjects()" placeholder="Search title or technology..." class="w-full bg-dark-base border border-dark-border rounded-lg pl-9 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                </div>
+
+                <div class="flex flex-wrap gap-2 w-full md:w-auto" id="filter-container">
+                    <button onclick="setProjectFilter('All')" class="filter-btn px-4 py-1.5 rounded-md text-xs font-medium bg-gold text-black">All</button>
+                    <button onclick="setProjectFilter('Figma Wireframe')" class="filter-btn px-4 py-1.5 rounded-md text-xs font-medium bg-dark-card text-gray-300 hover:text-white border border-dark-border">Figma Wireframes</button>
+                    <button onclick="setProjectFilter('Flutter App')" class="filter-btn px-4 py-1.5 rounded-md text-xs font-medium bg-dark-card text-gray-300 hover:text-white border border-dark-border">Flutter Apps</button>
+                </div>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic cards rendered via JS -->
+            </div>
+        </section>
+
+
+        <!-- ================= CONTACT VIEW ================= -->
+        <section id="view-contact" class="view-section hidden space-y-12">
+            <div class="border-b border-gold/20 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <h2 class="text-3xl font-cinzel font-bold text-white tracking-wide">CONTACT</h2>
+                    <p class="text-sm text-gold font-mono">Send a direct message or collaboration inquiry</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="Ccurriculum Vitae (CV).pdf" target="_blank" class="px-4 py-2 rounded-lg border border-gold/50 text-gold hover:bg-gold/10 font-semibold text-xs uppercase tracking-wider transition flex items-center space-x-2">
+                        <span>View CV</span>
+                        <i class="fa-solid fa-file-pdf text-xs"></i>
+                    </a>
+                    <span class="text-xs font-mono text-gold/60 hidden sm:inline">STATUS: AVAILABLE FOR PROJECTS</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-8 rounded-2xl space-y-6 relative overflow-hidden border border-gold/20 shadow-xl shadow-gold/5">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <h3 class="text-xl font-cinzel font-bold text-white flex items-center">
+                            <span class="w-2.5 h-2.5 rounded-full bg-gold mr-3 animate-pulse"></span>
+                            Get in Touch
+                        </h3>
+                        
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            I am open to discussions regarding IT projects, software development inquiries, UI/UX architecture, or scholarship collaborations.
+                        </p>
+
+                        <div class="space-y-4 pt-2">
+                            <a href="mailto:kharylledeleon13@gmail.com" class="flex items-center space-x-4 p-3.5 rounded-xl bg-dark-base border border-dark-border hover:border-gold/50 transition group">
+                                <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono text-gray-400 block uppercase tracking-widest">Email Address</span>
+                                    <span class="text-sm text-white font-mono group-hover:text-gold transition">kharylledeleon13@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <div class="flex items-center space-x-4 p-3.5 rounded-xl bg-dark-base border border-dark-border">
+                                <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono text-gray-400 block uppercase tracking-widest">Location</span>
+                                    <span class="text-sm text-white font-mono">2122 Sardonyx St, Pandan, Angeles City</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-dark-border flex space-x-3">
+                            <a href="#" class="w-9 h-9 rounded-lg bg-dark-base border border-dark-border flex items-center justify-center text-gray-300 hover:text-black hover:bg-gold hover:border-gold transition"><i class="fa-brands fa-github text-sm"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-lg bg-dark-base border border-dark-border flex items-center justify-center text-gray-300 hover:text-black hover:bg-gold hover:border-gold transition"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-lg bg-dark-base border border-dark-border flex items-center justify-center text-gray-300 hover:text-black hover:bg-gold hover:border-gold transition"><i class="fa-brands fa-figma text-sm"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="glass-panel p-8 rounded-2xl space-y-5 border border-gold/20 shadow-2xl relative">
+                        <div id="form-success-alert" class="hidden absolute inset-0 bg-dark-surface/95 backdrop-blur-md z-20 rounded-2xl flex flex-col items-center justify-center text-center p-6 space-y-3">
+                            <div class="w-14 h-14 rounded-full bg-gold/20 border border-gold flex items-center justify-center text-gold text-2xl animate-bounce">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <h4 class="text-xl font-cinzel font-bold text-white">Message Transmitted!</h4>
+                            <p class="text-xs text-gray-300 max-w-xs font-mono">Thank you for reaching out. I will get back to your inquiry shortly.</p>
+                            <button type="button" onclick="resetContactForm()" class="mt-2 px-6 py-2 rounded-lg bg-gold text-black font-bold text-xs uppercase tracking-wider hover:brightness-110 transition">Send Another</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-[11px] font-mono text-gray-300 tracking-wider">YOUR NAME <span class="text-gold">*</span></label>
+                                <input type="text" id="con-name" required placeholder="e.g. Jane Doe" class="w-full bg-dark-base border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block text-[11px] font-mono text-gray-300 tracking-wider">EMAIL ADDRESS <span class="text-gold">*</span></label>
+                                <input type="email" id="con-email" required placeholder="jane@example.com" class="w-full bg-dark-base border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-[11px] font-mono text-gray-300 tracking-wider">SUBJECT <span class="text-gold">*</span></label>
+                            <input type="text" id="con-subject" required placeholder="Project Collaboration / Inquiry" class="w-full bg-dark-base border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-[11px] font-mono text-gray-300 tracking-wider">MESSAGE <span class="text-gold">*</span></label>
+                            <textarea id="con-message" required rows="4" placeholder="Write your message details here..." class="w-full bg-dark-base border border-dark-border rounded-xl p-4 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold-dark text-black font-bold uppercase tracking-wider text-xs hover:brightness-110 transition shadow-lg shadow-gold/20 flex items-center justify-center space-x-2">
+                            <span>Send Message</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-gold/10 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 space-y-3 sm:space-y-0">
+            <p>&copy; 2026 Kharylle L. De Leon. All rights reserved.</p>
+            <p class="font-mono text-gold/80">System Plus College Foundation - BSIT </p>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODAL: PROJECT DETAIL & WIREFRAME INSPECTOR ================= -->
+    <div id="wireframe-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-panel border-gold/30 w-full max-w-4xl rounded-2xl overflow-hidden flex flex-col max-h-[92vh]">
+            <div class="px-6 py-4 border-b border-gold/25 flex items-center justify-between bg-dark-surface">
+                <div>
+                    <h3 class="font-cinzel text-lg text-white font-bold" id="wf-modal-title">Project Inspector</h3>
+                    <p class="text-xs font-mono text-gold" id="wf-modal-subtitle">Interactive Blueprint Preview</p>
+                </div>
+                <button onclick="closeWireframeModal()" class="text-gray-400 hover:text-white text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+                <div class="w-full h-56 sm:h-72 rounded-xl overflow-hidden border border-gold/30 bg-dark-base relative shadow-lg">
+                    <img id="wf-modal-img" src="" alt="Enlarged Project Preview" class="w-full h-full object-cover object-top">
+                </div>
+
+                <div class="space-y-3 bg-dark-surface/50 p-4 rounded-xl border border-dark-border">
+                    <h4 class="text-xs font-mono uppercase tracking-widest text-gold font-bold">Project Overview & Specs</h4>
+                    <p id="wf-modal-desc" class="text-sm text-gray-300 leading-relaxed"></p>
+                    <div id="wf-modal-tags" class="flex flex-wrap gap-1.5 pt-2"></div>
+                </div>
+
+                <!-- Interactive Section Breakdowns -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-mono uppercase tracking-widest text-gold font-bold">
+                            <i class="fa-solid fa-layer-group mr-1.5"></i> Section-by-Section Screen Look Inside
+                        </h4>
+                        <span class="text-[10px] font-mono text-gray-400">Select tab to view inside layout</span>
+                    </div>
+
+                    <!-- Screen Tabs Bar -->
+                    <div class="flex flex-wrap gap-2 border-b border-dark-border pb-3" id="wf-screen-tabs"></div>
+
+                    <!-- Live Screen Look Canvas -->
+                    <div class="bg-dark-base border border-gold/20 rounded-xl p-5 relative overflow-hidden shadow-inner min-h-[180px] flex flex-col justify-center" id="wf-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL: ADD NEW PROJECT FORM ================= -->
+    <div id="add-project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-panel border-gold/30 w-full max-w-lg rounded-2xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-gold/20 flex items-center justify-between bg-dark-surface">
+                <h3 class="font-cinzel text-lg text-white font-bold">Add New Project</h3>
+                <button onclick="closeAddProjectModal()" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleAddProjectSubmit(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-mono text-gray-300 mb-1">PROJECT TITLE *</label>
+                    <input type="text" id="new-title" required class="w-full bg-dark-base border border-dark-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-gray-300 mb-1">CATEGORY *</label>
+                    <select id="new-category" class="w-full bg-dark-base border border-dark-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                        <option value="Figma Wireframe">Figma Wireframe</option>
+                        <option value="Flutter App">Flutter App</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-gray-300 mb-1">DESCRIPTION *</label>
+                    <textarea id="new-desc" required rows="3" class="w-full bg-dark-base border border-dark-border rounded-lg p-3 text-sm text-white focus:outline-none focus:border-gold resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-gray-300 mb-1">TECHNOLOGIES USED (comma separated) *</label>
+                    <input type="text" id="new-tags" required class="w-full bg-dark-base border border-dark-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold" placeholder="Figma, Flutter, Dart">
+                </div>
+
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeAddProjectModal()" class="px-4 py-2 rounded-lg border border-dark-border text-gray-400 hover:text-white text-sm">Cancel</button>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-gold text-black font-semibold text-sm hover:bg-gold-light">Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        let projectsData = [
+            {
+                id: 'dev-portfolio-wireframes',
+                title: 'Dev Portfolio (Figma Wireframes)',
+                category: 'Figma Wireframe',
+                image: 'image_2faa9d.jpg',
+                tags: ['Figma', 'UI/UX Design', 'Wireframing'],
+                description: 'Complete Figma workspace blueprint mapping out the developer portfolio, featuring structured layouts for the Menu, Home Page, My Projects, Resume Builder, and Socials. Built with rigorous design systems and responsive multi-viewport framing.',
+                wireframes: [
+                    { 
+                        name: '1. Menu & Nav Bar', 
+                        layout: 'Top sticky header hosting brand initials, navigation links, and a responsive mobile drawer toggle button.',
+                        visualSnippet: '<div class="flex items-center justify-between bg-dark-surface p-3 rounded-lg border border-gold/30 text-xs"><div class="flex items-center space-x-2"><div class="w-6 h-6 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold text-[10px]">KD</div><span class="text-white font-bold">Header Bar</span></div><div class="space-x-2 text-[10px] text-gray-400 font-mono hidden sm:inline"><span>Home</span><span>About</span><span>Projects</span></div><div class="text-gold"><i class="fa-solid fa-bars"></i></div></div>'
+                    },
+                    { 
+                        name: '2. Home Page Section', 
+                        layout: 'Hero introductory block containing DOST scholar status badge, full name typography, bio paragraph, and direct CTA buttons.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="inline-block px-2 py-0.5 bg-gold/10 text-gold rounded text-[10px] font-mono">DOST Scholar Badge</div><div class="text-white font-cinzel font-bold text-sm">Kharylle L. De Leon</div><div class="flex gap-2 pt-1"><div class="px-3 py-1 bg-gold text-black rounded text-[10px] font-bold">View Portfolio</div><div class="px-3 py-1 border border-gold/40 text-gold rounded text-[10px]">View CV</div></div></div>'
+                    },
+                    { 
+                        name: '3. My Projects Grid', 
+                        layout: 'Filtering control bar alongside responsive card containers displaying project mockups, tags, and detail view triggers.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border"><div class="flex gap-1"><span class="px-2 py-0.5 bg-gold text-black rounded text-[10px] font-bold">All</span><span class="px-2 py-0.5 bg-dark-base text-gray-300 rounded text-[10px]">Figma</span></div><div class="grid grid-cols-2 gap-2 pt-1"><div class="bg-dark-base p-2 rounded border border-gold/20 text-[10px] text-white">Project Card A</div><div class="bg-dark-base p-2 rounded border border-dark-border text-[10px] text-gray-400">Project Card B</div></div></div>'
+                    },
+                    { 
+                        name: '4. Resume & Education', 
+                        layout: 'Chronological timeline block mapping out SPCF BSIT degree standing, high school education, and professional milestones.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="border-l-2 border-gold pl-2 space-y-1"><div class="text-white font-bold text-[11px]">BSIT - Systems Plus College Foundation</div><div class="text-[10px] text-gold font-mono">2024 - Present (3rd Year)</div></div></div>'
+                    }
+                ]
+            },
+            {
+                id: 'applifix-wireframes',
+                title: 'Applifix (Appliance Technician Booking App Wireframes)',
+                category: 'Figma Wireframe',
+                image: 'image_2faad8.jpg',
+                tags: ['Figma', 'Mobile UI', 'Prototyping'],
+                description: 'End-to-end mobile user flow designed in Figma for an appliance repair service, capturing the journey from appliance selection to technician matching, scheduling, and secure payment processing.',
+                wireframes: [
+                    { 
+                        name: '1. Select Appliance Screen', 
+                        layout: 'Service categorization grid where users select appliances like AC units, refrigerators, or washing machines for instant inspection.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="text-gray-300 text-[11px] font-bold">Select Problem Appliance</div><div class="grid grid-cols-3 gap-2 text-center"><div class="bg-dark-base border border-gold/40 p-2 rounded text-[10px] text-gold font-bold">AC Unit</div><div class="bg-dark-base border border-dark-border p-2 rounded text-[10px] text-gray-400">Washing Machine</div><div class="bg-dark-base border border-dark-border p-2 rounded text-[10px] text-gray-400">Refrigerator</div></div></div>'
+                    },
+                    { 
+                        name: '2. Technician Match View', 
+                        layout: 'Technician catalog listing verified local servicemen complete with ratings, job counts, and hourly service pricing tags.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="flex items-center justify-between bg-dark-base p-2 rounded border border-gold/30"><div><span class="text-white font-bold text-[11px]">Eng. Juan D.</span><span class="text-[9px] text-gold block">4.9 ★ (42 Jobs Completed)</span></div><span class="text-[10px] font-mono text-gold bg-gold/10 px-2 py-1 rounded">₱350/hr</span></div></div>'
+                    },
+                    { 
+                        name: '3. Booking Schedule Flow', 
+                        layout: 'Interactive calendar picker grid paired with time slots for selecting preferred service appointment windows.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="text-[11px] text-white font-bold">Choose Appointment Date & Time</div><div class="grid grid-cols-4 gap-1 text-[10px] font-mono"><span class="bg-gold text-black p-1.5 rounded text-center font-bold">Mon 12</span><span class="bg-dark-base text-gray-300 p-1.5 rounded text-center">Tue 13</span><span class="bg-dark-base text-gray-300 p-1.5 rounded text-center">Wed 14</span><span class="bg-dark-base text-gray-300 p-1.5 rounded text-center">Thu 15</span></div></div>'
+                    }
+                ]
+            },
+            {
+                id: 'flutter-themed-app',
+                title: 'Flutter Themed Mobile App',
+                category: 'Flutter App',
+                image: 'image_2fa735.png',
+                tags: ['Flutter', 'Dart', 'Mobile Development'],
+                description: 'A robust multi-screen mobile application highlighting comprehensive dynamic theming, layered navigation architectures, and customized asynchronous data lists built purely in Flutter and Dart.',
+                wireframes: [
+                    { 
+                        name: '1. Main Dashboard', 
+                        layout: 'Core application entry point featuring styled navigation buttons, user stats cards, and asynchronous dynamic feeds.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-gold/30 text-xs"><div class="flex justify-between items-center"><span class="text-white font-bold">Flutter Main Dashboard</span><span class="w-2.5 h-2.5 rounded-full bg-gold animate-pulse"></span></div><div class="bg-dark-base p-2 rounded border border-dark-border text-[10px] text-gray-300">Asynchronous Data State: Active</div></div>'
+                    },
+                    { 
+                        name: '2. Theme Controller Screen', 
+                        layout: 'Dark/Light mode switch toggle providing dynamic UI color-scheme updates in real-time execution.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="flex items-center justify-between"><span class="text-gray-300">Dynamic Dark/Light Mode Switch</span><div class="w-9 h-5 bg-gold rounded-full relative p-0.5"><div class="w-4 h-4 bg-black rounded-full absolute right-0.5"></div></div></div></div>'
+                    }
+                ]
+            },
+            {
+                id: 'flutter-widgets-ui',
+                title: 'Flutter Widgets UI',
+                category: 'Flutter App',
+                image: 'image_2fa75b.png',
+                tags: ['Flutter', 'UI Components', 'Material Design'],
+                description: 'A modular showcase of custom Flutter widget implementations, meticulously demonstrating standard mobile UI patterns including custom Slivers, Bottom Sheets, Drawers, and Bottom Navigation bars.',
+                wireframes: [
+                    { 
+                        name: '1. Component List View', 
+                        layout: 'Interactive catalog showcasing reusable Flutter custom buttons, animated cards, and responsive layout elements.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="bg-gold/10 border border-gold/30 p-2 rounded text-gold font-bold">Custom ElevatedButton Widget</div><div class="bg-dark-base border border-dark-border p-2 rounded text-gray-300">Stateless Card Component</div></div>'
+                    },
+                    { 
+                        name: '2. Bottom Sheet Modal', 
+                        layout: 'Slide-up modal container displaying options menu and quick toggles built with Flutter Material Design.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border-t-2 border-gold text-xs"><div class="w-10 h-1 bg-gray-500 rounded-full mx-auto"></div><div class="text-white font-bold text-center">Flutter Bottom Sheet Content</div><div class="flex gap-2"><div class="flex-1 bg-dark-base p-1.5 rounded text-center text-gold border border-gold/30">Action 1</div><div class="flex-1 bg-dark-base p-1.5 rounded text-center text-gray-300 border border-dark-border">Action 2</div></div></div>'
+                    }
+                ]
+            },
+            {
+                id: 'flutter-explore-page',
+                title: 'Flutter Explore Page',
+                category: 'Flutter App',
+                image: 'image_2fa7b0.png',
+                tags: ['Flutter', 'Front-End', 'App Layout'],
+                description: 'An interactive "Explore" interface tailored for an educational learning platform, designed to help users smoothly discover, search, and navigate beginner to advanced Flutter tutorials and code samples.',
+                wireframes: [
+                    { 
+                        name: '1. Explore Feed Screen', 
+                        layout: 'Grid and list views for tutorial categories coupled with instant local search filtering and bookmarking toggles.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="bg-dark-base p-2 rounded border border-gold/30 flex justify-between items-center"><span class="text-white font-bold">Tutorial #1: Widget Lifecycle</span><i class="fa-solid fa-bookmark text-gold"></i></div><div class="bg-dark-base p-2 rounded border border-dark-border flex justify-between items-center"><span class="text-gray-300">Tutorial #2: State Management</span><i class="fa-solid fa-bookmark text-gray-500"></i></div></div>'
+                    }
+                ]
+            },
+            {
+                id: 'student-info-ui',
+                title: 'Student Information UI',
+                category: 'Flutter App',
+                image: 'image_2fa7d4.png',
+                tags: ['Flutter', 'Form Design', 'Dark Mode'],
+                description: 'A highly polished, dark-themed data entry layout structured to efficiently capture, validate, and display detailed student information, curriculum standing, and active academic courses.',
+                wireframes: [
+                    { 
+                        name: '1. Student Form Section', 
+                        layout: 'Structured input validation fields and user profile summary card optimized for high-density academic records.',
+                        visualSnippet: '<div class="space-y-2 bg-dark-surface p-3 rounded-lg border border-dark-border text-xs"><div class="bg-dark-base border border-gold/40 rounded p-2 text-gray-300 flex justify-between"><span>Student ID:</span><span class="text-gold font-mono font-bold">2026-SPCF-0142</span></div><div class="bg-dark-base border border-dark-border rounded p-2 text-gray-300 flex justify-between"><span>Scholarship Status:</span><span class="text-gold font-mono font-bold">DOST Scholar</span></div></div>'
+                    }
+                ]
+            }
+        ];
+
+        // Certificates Data (based on your uploaded file list and CCNA badge)
+        const certificatesData = [
+            {
+                title: 'CCNA: Introduction to Networks',
+                issuer: 'Cisco Networking Academy',
+                date: '2025',
+                file: 'ccna-introduction-to-networks.png',
+                category: 'Networking',
+                description: 'Completed networking fundamentals, IP addressing, Ethernet protocols, and security basics.'
+            },
+            {
+                title: 'C++ Programming',
+                issuer: 'Systems Plus College Foundation',
+                date: '2025',
+                file: 'C++ PROGRAMMING_.pdf',
+                category: 'Programming',
+                description: 'Certified coursework in object-oriented programming, memory management, and algorithmic logic.'
+            },
+            {
+                title: 'Python for Data Science',
+                issuer: 'Technical Certification',
+                date: '2025',
+                file: 'PHYTON FOR DATA SCIENCE_.pdf',
+                category: 'Data Science',
+                description: 'Completed data analysis fundamentals, scripting structures, and data science libraries.'
+            },
+            {
+                title: 'Software Engineering',
+                issuer: 'SPCF BSIT Curriculum',
+                date: '2025',
+                file: 'SOFTWARE ENGINEERING_.pdf',
+                category: 'Engineering',
+                description: 'Covered software development life cycles, system design patterns, and architecture models.'
+            },
+            {
+                title: 'Computer Architecture',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'COMPUTER ARCHITECTURE_.pdf',
+                category: 'Hardware/Systems',
+                description: 'Studied processor organization, assembly logic, and internal computer system structures.'
+            },
+            {
+                title: 'Computer Communication & Networks',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'COMPUTER COMMUNICATION AN....pdf',
+                category: 'Networking',
+                description: 'Explored network routing protocols, data transmission models, and packet switching.'
+            },
+            {
+                title: 'Creating Concept for Social Media',
+                issuer: 'Professional Training',
+                date: '2025',
+                file: 'CREATING CONCEPT FOR SOCIAL ...pdf',
+                category: 'UI/UX & Media',
+                description: 'Learned conceptual design frameworks, digital media branding, and audience targeting.'
+            },
+            {
+                title: 'Discrete Structures',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'DISCRETE STRUCTURES.pdf',
+                category: 'Mathematics',
+                description: 'Mastered mathematical logic, set theory, graphs, and relational structures.'
+            },
+            {
+                title: 'Elementary Data Structures',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'ELEMENTARY DATA STRUCTURES.pdf',
+                category: 'Algorithms',
+                description: 'Completed studies on linked lists, stacks, queues, trees, and algorithmic efficiency.'
+            },
+            {
+                title: 'Information Security',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'INFORMATION SECURITY_.pdf',
+                category: 'Cybersecurity',
+                description: 'Covered threat analysis, encryption standards, system hardening, and secure protocols.'
+            },
+            {
+                title: 'Introduction to Computer Science I',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'INTRO TO COMPSCI I.pdf',
+                category: 'Computer Science',
+                description: 'Foundation course covering problem-solving techniques and programming basics.'
+            },
+            {
+                title: 'Introduction to Computer Science II',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'INTRO TO COMPSCI II.pdf',
+                category: 'Computer Science',
+                description: 'Advanced foundational concepts in programming logic and modular design.'
+            },
+            {
+                title: 'Introduction to Cryptography & Networks',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'INTRO TO CRYPTOGRAPHY AND N....pdf',
+                category: 'Security',
+                description: 'Explored encryption algorithms, hashing, digital signatures, and secure channels.'
+            },
+            {
+                title: 'Introduction to Modern Database Systems',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'INTRO TO MODERN DATABASE SY....pdf',
+                category: 'Databases',
+                description: 'Relational database management, SQL queries, normalization, and database design.'
+            },
+            {
+                title: 'Operating Systems',
+                issuer: 'SPCF Department of IT',
+                date: '2025',
+                file: 'OPERATING SYSTEMS_.pdf',
+                category: 'Systems',
+                description: 'Studied process scheduling, memory management, file systems, and concurrency.'
+            },
+            {
+                title: 'DOST SEI Merit Scholar',
+                issuer: 'Department of Science and Technology',
+                date: '2024',
+                file: 'CERTIFICATE.pdf',
+                category: 'Scholarship',
+                description: 'Prestigious undergraduate merit scholarship recognizing excellence in STEM studies.'
+            }
+        ];
+
+        let showAllCertificates = false;
+
+        function renderCertificates() {
+            const grid = document.getElementById('certificates-grid');
+            const hiddenCountSpan = document.getElementById('hidden-count');
+            const seeMoreBtn = document.getElementById('see-more-btn');
+
+            grid.innerHTML = '';
+
+            const displayedCerts = showAllCertificates ? certificatesData : certificatesData.slice(0, 3);
+            const hiddenCount = certificatesData.length - 3;
+
+            hiddenCountSpan.innerText = hiddenCount > 0 ? hiddenCount : 0;
+            if (showAllCertificates) {
+                seeMoreBtn.innerHTML = `<i class="fa-solid fa-chevron-up mr-2"></i> Show Less`;
+            } else {
+                seeMoreBtn.innerHTML = `<i class="fa-solid fa-chevron-down mr-2"></i> See More Certificates (<span id="hidden-count">${hiddenCount}</span> more)`;
+            }
+
+            displayedCerts.forEach(cert => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-xl p-5 flex flex-col justify-between border border-gold/20 relative group';
+                
+                card.innerHTML = `
+                    <div class="absolute top-4 right-4 text-gold">
+                        <i class="fa-solid fa-certificate text-xl"></i>
+                    </div>
+                    <div class="space-y-2 pr-6">
+                        <span class="text-[10px] font-mono text-gold bg-gold/10 px-2 py-0.5 rounded border border-gold/30 uppercase tracking-widest">${cert.category}</span>
+                        <h4 class="text-base font-cinzel font-bold text-white leading-tight">${cert.title}</h4>
+                        <p class="text-xs text-gray-400 font-mono">${cert.issuer}</p>
+                        <p class="text-xs text-gray-300 leading-relaxed pt-1">${cert.description}</p>
+                    </div>
+                    <div class="pt-4 mt-3 border-t border-dark-border flex items-center justify-between text-[11px] font-mono">
+                        <span class="text-gray-400">Issued: ${cert.date}</span>
+                        <a href="${cert.file}" target="_blank" class="text-gold font-bold flex items-center hover:underline">
+                            <i class="fa-solid fa-file-pdf mr-1 text-xs"></i> View PDF <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[9px]"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleCertificates() {
+            showAllCertificates = !showAllCertificates;
+            renderCertificates();
+        }
+
+        let activeFilter = 'All';
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-gold', 'border-b-2', 'border-gold');
+                btn.classList.add('text-gray-400');
+            });
+            const activeNav = document.getElementById(`nav-${viewName}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-gray-400');
+                activeNav.classList.add('text-gold', 'border-b-2', 'border-gold');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            const searchVal = document.getElementById('project-search').value.toLowerCase();
+
+            const filtered = projectsData.filter(item => {
+                const matchesFilter = activeFilter === 'All' || item.category === activeFilter;
+                const matchesSearch = item.title.toLowerCase().includes(searchVal) || 
+                                      item.description.toLowerCase().includes(searchVal) ||
+                                      item.tags.some(t => t.toLowerCase().includes(searchVal));
+                return matchesFilter && matchesSearch;
+            });
+
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-400">
+                        <i class="fa-solid fa-folder-open text-4xl mb-3 text-gold/40"></i>
+                        <p>No matching projects found.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(proj => {
+                const tagsHTML = proj.tags.map(t => `<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-dark-base border border-dark-border text-gold">${t}</span>`).join(' ');
+                
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-xl flex flex-col overflow-hidden border border-gold/10 group cursor-pointer';
+                card.onclick = () => openWireframeModal(proj.id);
+                
+                card.innerHTML = `
+                    <div class="h-40 w-full overflow-hidden border-b border-gold/20 bg-dark-surface">
+                        <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono text-gold bg-gold/10 px-2 py-1 rounded border border-gold/20 uppercase tracking-wider">${proj.category}</span>
+                            </div>
+                            <h3 class="text-md font-bold text-white font-cinzel leading-tight group-hover:text-gold transition">${proj.title}</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed line-clamp-3">${proj.description}</p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">${tagsHTML}</div>
+                        </div>
+                        <div class="pt-4 mt-2 border-t border-dark-border flex items-center justify-between">
+                            <span class="text-xs text-gold hover:text-gold-light font-mono flex items-center transition">
+                                <i class="fa-solid fa-up-right-and-down-left-from-center mr-1.5"></i> View Details & Image
+                            </span>
+                            <i class="fa-solid fa-arrow-right text-xs text-gold/60"></i>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setProjectFilter(category) {
+            activeFilter = category;
+            const buttons = document.querySelectorAll('#filter-container button');
+            buttons.forEach(btn => {
+                if (btn.innerText.includes(category) || (category === 'All' && btn.innerText === 'All')) {
+                    btn.className = 'filter-btn px-4 py-1.5 rounded-md text-xs font-medium bg-gold text-black';
+                } else {
+                    btn.className = 'filter-btn px-4 py-1.5 rounded-md text-xs font-medium bg-dark-card text-gray-300 hover:text-white border border-dark-border';
+                }
+            });
+            renderProjects();
+        }
+
+        function filterProjects() {
+            renderProjects();
+        }
+
+        function openWireframeModal(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('wf-modal-title').innerText = project.title;
+            document.getElementById('wf-modal-subtitle').innerText = `Detailed Project View (${project.category})`;
+            document.getElementById('wf-modal-img').src = project.image;
+            document.getElementById('wf-modal-desc').innerText = project.description;
+
+            const tagsContainer = document.getElementById('wf-modal-tags');
+            tagsContainer.innerHTML = project.tags.map(t => `<span class="text-[11px] font-mono px-2.5 py-1 rounded bg-dark-base border border-gold/30 text-gold">${t}</span>`).join(' ');
+
+            const tabsContainer = document.getElementById('wf-screen-tabs');
+            tabsContainer.innerHTML = '';
+
+            project.wireframes.forEach((wf, index) => {
+                const btn = document.createElement('button');
+                btn.className = `px-3.5 py-1.5 rounded text-xs font-mono transition ${index === 0 ? 'bg-gold text-black font-bold' : 'bg-dark-base text-gray-400 border border-dark-border hover:text-white'}`;
+                btn.innerText = wf.name;
+                btn.onclick = () => selectWireframeScreen(btn, wf);
+                tabsContainer.appendChild(btn);
+            });
+
+            if (project.wireframes.length > 0) {
+                renderWireframeCanvas(project.wireframes[0]);
+            }
+
+            document.getElementById('wireframe-modal').classList.remove('hidden');
+        }
+
+        function selectWireframeScreen(btnElement, wf) {
+            const parent = btnElement.parentElement;
+            Array.from(parent.children).forEach(child => {
+                child.className = 'px-3.5 py-1.5 rounded text-xs font-mono transition bg-dark-base text-gray-400 border border-dark-border hover:text-white';
+            });
+            btnElement.className = 'px-3.5 py-1.5 rounded text-xs font-mono transition bg-gold text-black font-bold';
+            renderWireframeCanvas(wf);
+        }
+
+        function renderWireframeCanvas(wf) {
+            const canvas = document.getElementById('wf-canvas');
+            canvas.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between border-b border-dark-border pb-1.5">
+                        <span class="text-xs font-mono font-bold text-gold uppercase tracking-wider">
+                            <i class="fa-solid fa-desktop mr-1"></i> Section View: ${wf.name}
+                        </span>
+                        <span class="text-[10px] font-mono text-gray-400">Inside Section Blueprint</span>
+                    </div>
+
+                    <div class="p-4 bg-dark-surface rounded-lg border border-gold/20 flex flex-col justify-center min-h-[90px]">
+                        ${wf.visualSnippet}
+                    </div>
+
+                    <p class="text-xs text-gray-300 leading-relaxed bg-dark-surface/60 p-2.5 rounded border border-dark-border">
+                        <strong class="text-gold font-mono">Layout Behavior:</strong> ${wf.layout}
+                    </p>
+                </div>
+            `;
+        }
+
+        function closeWireframeModal() {
+            document.getElementById('wireframe-modal').classList.add('hidden');
+        }
+
+        function openAddProjectModal() {
+            document.getElementById('add-project-modal').classList.remove('hidden');
+        }
+
+        function closeAddProjectModal() {
+            document.getElementById('add-project-modal').classList.add('hidden');
+        }
+
+        function handleAddProjectSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('new-title').value;
+            const category = document.getElementById('new-category').value;
+            const desc = document.getElementById('new-desc').value;
+            const tagsInput = document.getElementById('new-tags').value;
+            const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : ['Project'];
+
+            const newProj = {
+                id: 'custom-' + Date.now(),
+                title: title,
+                category: category,
+                tags: tags,
+                image: 'https://via.placeholder.com/800x500/121216/d4af37?text=' + encodeURIComponent(title),
+                description: desc,
+                wireframes: [
+                    { 
+                        name: '1. Main Section', 
+                        layout: 'Initial structural layout and feature specification breakdown for ' + title,
+                        visualSnippet: '<div class="text-xs font-mono text-gold text-center py-2">Custom Added Project Section Canvas Mockup</div>'
+                    }
+                ]
+            };
+
+            projectsData.unshift(newProj);
+            renderProjects();
+            closeAddProjectModal();
+            e.target.reset();
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('form-success-alert').classList.remove('hidden');
+        }
+
+        function resetContactForm() {
+            document.getElementById('contact-form').reset();
+            document.getElementById('form-success-alert').classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+            renderCertificates();
+        });
+    </script>
+</body>
+</html>
